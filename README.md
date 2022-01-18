@@ -8,11 +8,15 @@ A high-quality training set is the basis for a reliable supervised learning NER 
 ![flowchart of ner pipeline](./doc/ner_pipeline_20220116.png)
 
 ## Install
-
+It is strongly recommended to train and predict on the GPU, so make sure you have the GPU and the correct CUDA installed on your device before working.
 ```commandline
 pip3 install -r requirements.txt
 ```
-## Data Annotation
-TODO
-## Training
+
+## Modules
+The following diagrams help you understand each module in the project, details can be found in each directory.
+![ner modules](./doc/ner_modules.png)
+
+
+## Citation
 TODO

@@ -5,3 +5,4 @@ torch~=1.8.1
 transformers~=4.6.1
 filelock~=3.0.12
 tqdm~=4.50.2
+flask~=2.0.1
