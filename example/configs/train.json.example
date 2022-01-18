@@ -1,0 +1,20 @@
+{
+  "model_name_or_path": "../pretrain/pubmedbert_abs/",
+  "data_dir": "../example/data/ner_test/",
+  "labels": "../example/data/ner_test/labels.txt",
+  "max_seq_length": 512,
+  "output_dir": "../example/data/ner_test/output",
+  "overwrite_output_dir": true,
+  "cache_dir": "../pretrain/pubmedbert_abs/",
+  "terms_document_freq": "../example/cleanterms/terms_document_freq.txt.example",
+  "do_train": true,
+  "do_eval": true,
+  "do_predict": false,
+  "evaluation_strategy": "no",
+  "per_device_train_batch_size": 32,
+  "per_device_eval_batch_size": 16,
+  "eval_accumulation_steps": 1,
+  "learning_rate": 5e-5,
+  "num_train_epochs": 4,
+  "save_total_limit": 5
+}

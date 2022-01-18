@@ -1,0 +1,12 @@
+*.log
+*.pkl.example
+*/__pycache__/
+*/runs/
+server/tmp_test/
+
+pretrain/*
+!pretrain/download_pubmedbert.sh
+
+example/data/*
+!example/data/corpus*
+!example/data/test/
