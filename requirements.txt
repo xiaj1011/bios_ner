@@ -1,8 +1,7 @@
 conllu~=4.4
 numpy~=1.19.2
 seqeval~=1.2.2
-torch~=1.8.1
-transformers~=4.6.1
+transformers~=3.4.0
 filelock~=3.0.12
 tqdm~=4.50.2
 flask~=2.0.1
