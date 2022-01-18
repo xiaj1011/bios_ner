@@ -10,7 +10,7 @@ A high-quality training set is the basis for a reliable supervised learning NER 
 ## Install
 It is strongly recommended to train and predict on the GPU, so make sure you have the GPU and the correct CUDA installed on your device before working.
 ```commandline
-pip3 install -r requirements.txt
+sh env_setup.sh
 ```
 
 ## Modules
