@@ -5,3 +5,5 @@ transformers~=3.4.0
 filelock~=3.0.12
 tqdm~=4.50.2
 flask~=2.0.1
+flask_cors~=3.0.10
+psutil~=5.8.0
