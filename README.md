@@ -8,6 +8,7 @@ A high-quality training set is the basis for a reliable supervised learning NER 
 ![flowchart of ner pipeline](./doc/ner_pipeline_20220116.png)
 
 ## Install
+Python3.6 is recommended! For python3.7, see [issues 14559](https://github.com/huggingface/transformers/issues/14559).  
 It is strongly recommended to train and predict on the GPU, so make sure you have the GPU and the correct CUDA installed on your device before working.
 ```commandline
 sh env_setup.sh
