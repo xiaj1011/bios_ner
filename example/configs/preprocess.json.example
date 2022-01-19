@@ -6,7 +6,7 @@
   "terms_df_path": "../example/cleanterms/terms_document_freq.txt.example",
   "dataset": {
     "mode": "train",
-    "working_dir": "../example/data/ner_test/",
+    "working_dir": "../example/data/ner_train/",
     "text_path": "../example/data/corpus.txt",
     "tagged_path": "../example/data/corpus_tagged.txt",
     "annotated_path": "../example/data/corpus_annotated.txt"
