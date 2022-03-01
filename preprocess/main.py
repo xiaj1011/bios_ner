@@ -33,12 +33,11 @@ def generate(args):
         log.info("mode: train")
         prepare_data.generate(args.dataset['text_path'],
                               args.dataset['annotated_path'], args.terms_pkl_path, args.sty2sgr_path,
-                              args.dataset['working_dir'], mode)
+                              args.dataset['working_dir'])
 
     if mode == 'predict':
         log.info("mode: predict")
-        prepare_data.generate_predict(args.dataset['text_path'],
-                                      args.dataset['tagged_path'], args.dataset['working_dir'], mode)
+        prepare_data.generate_predict(args.dataset['text_path'], args.dataset['working_dir'])
 
 
 def parse_json_args(args_json_path: str):
@@ -67,7 +66,10 @@ if __name__ == '__main__':
 
     t2 = time.time()
     log.info("step 2: entity matching ...")
-    entity_match(pre_args)
+    if pre_args.dataset['mode'] == 'train':
+        entity_match(pre_args)
+    else:
+        log.info("Predict task, SKIP entity matching.")
 
     t3 = time.time()
     log.info("step 3: generate train/dev/test data ...")

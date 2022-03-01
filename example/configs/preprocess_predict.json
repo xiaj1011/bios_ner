@@ -1,0 +1,12 @@
+{
+  "cleanterms_path":"../example/cleanterms/cleanterms.txt.example",
+  "terms_pkl_path": "../example/cleanterms/cleanterms.pkl.example",
+  "trie_pkl_path": "../example/cleanterms/cleanterms_trie.pkl.example",
+  "sty2sgr_path": "../example/cleanterms/entity_group.json.example",
+  "terms_df_path": "../example/cleanterms/terms_document_freq.txt.example",
+  "dataset": {
+    "mode": "predict",
+    "working_dir": "../example/data/ner_predict/",
+    "text_path": "../example/data/corpus.txt"
+  }
+}
