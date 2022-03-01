@@ -343,7 +343,6 @@ def main():
 def write_predictions_to_file(writer: TextIO, test_input_reader: TextIO, preds_list: List):
     example_id = 0
     for line in test_input_reader:
-        line = line.strip()
         if line.startswith("==DOCSTART==") or line == "" or line == "\n":
             writer.write(line)
             if not preds_list[example_id]:
