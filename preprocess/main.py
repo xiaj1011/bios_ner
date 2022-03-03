@@ -64,16 +64,20 @@ if __name__ == '__main__':
     log.info("step 1: trie building ...")
     build_trie(pre_args)
 
+    mode = pre_args.dataset['mode']
     t2 = time.time()
     log.info("step 2: entity matching ...")
-    if pre_args.dataset['mode'] == 'train':
+    if mode in ['train', 'trie_match']:
         entity_match(pre_args)
     else:
-        log.info("Predict task, SKIP entity matching.")
+        log.info(f"{mode} task, SKIP entity matching.")
 
     t3 = time.time()
     log.info("step 3: generate train/dev/test data ...")
-    generate(pre_args)
+    if mode in ['train', 'predict']:
+        generate(pre_args)
+    else:
+        log.info(f"{mode} task, SKIP generate train/dev/test.")
 
     t4 = time.time()
     log.info("step 1: trie building cost {} second".format(t2 - t1))

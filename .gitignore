@@ -10,3 +10,5 @@ pretrain/*
 example/data/*
 !example/data/corpus*
 !example/data/test/
+
+preprocess/task_*
