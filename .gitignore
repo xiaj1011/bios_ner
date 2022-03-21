@@ -12,3 +12,6 @@ example/data/*
 !example/data/test/
 
 preprocess/task_*
+preprocess/preprocess.json
+preprocess/run_*.sh
+tasks/
