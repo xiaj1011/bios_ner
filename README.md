@@ -2,11 +2,6 @@
 This project is used for **named entity recognition**(NER) in the **medical** field, and it helps us build a large-scale medical knowledge graph BIOS (https://bios.idea.edu.cn/).
 
 
-
-## NER Pipeline
-A high-quality training set is the basis for a reliable supervised learning NER model, for which some additional work is required to implement training set annotation. The complete pipeline is shown in the figure below, and the details of some dependencies could be found in other projects under this group.
-![flowchart of ner pipeline](./doc/ner_pipeline_20220116.png)
-
 ## Install
 `Python3.6` is recommended! For python3.7, see [issues 14559](https://github.com/huggingface/transformers/issues/14559).  
 It is strongly recommended to train and predict on the GPU, so make sure you have the GPU and the correct CUDA installed on your device before working.
@@ -16,8 +11,27 @@ sh env_setup.sh
 
 ## Modules
 The following diagrams help you understand each module in the project, details can be found in each directory.
-![ner modules](./doc/ner_modules.png)
 
+![img.png](doc/img.png)
 
 ## Citation
-TODO
+```bibtex
+@misc{https://doi.org/10.48550/arxiv.2203.09975,
+  doi = {10.48550/ARXIV.2203.09975},
+  
+  url = {https://arxiv.org/abs/2203.09975},
+  
+  author = {Yu, Sheng and Yuan, Zheng and Xia, Jun and Luo, Shengxuan and Ying, Huaiyuan and Zeng, Sihang and Ren, Jingyi and Yuan, Hongyi and Zhao, Zhengyun and Lin, Yucong and Lu, Keming and Wang, Jing and Xie, Yutao and Shum, Heung-Yeung},
+  
+  keywords = {Computation and Language (cs.CL), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  
+  title = {BIOS: An Algorithmically Generated Biomedical Knowledge Graph},
+  
+  publisher = {arXiv},
+  
+  year = {2022},
+  
+  copyright = {Creative Commons Attribution Non Commercial Share Alike 4.0 International}
+}
+
+```

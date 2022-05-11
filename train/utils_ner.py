@@ -28,6 +28,7 @@ import random
 
 logger = logging.getLogger(__name__)
 
+
 @dataclass
 class InputExample:
     """
@@ -73,7 +74,6 @@ class TokenClassificationTask:
 
     def convert_examples_to_features(
             self,
-            term_df,
             examples: List[InputExample],
             label_list: List[str],
             max_seq_length: int,
@@ -96,19 +96,7 @@ class TokenClassificationTask:
             - True (XLNet/GPT pattern): A + [SEP] + B + [SEP] + [CLS]
         `cls_token_segment_id` define the segment id associated to the CLS token (0 for BERT, 2 for XLNet)
         """
-        """
-        eg: EN，pytorch实现
-        sentence: is this jacksonville ?  (O O B-xx O)
-        tokens: [CLS] is this jack ##son ##ville ? [SEP] [PAD] [PAD] ...
-        label_ids: -100 O O B-xx -100 -100 O -100 -100 -100 ...  (使用nn.CrossEntropy，[CLS] [SEP] ##xx [PAD]都不计损失)
-        input_mask: 1   1 1  1    1    1    1  1   0    0
-        
-        eg: CH，tensorflow实现
-        sentence: 这是维吗？(O O B-xx O O)
-        tokens: [CLS] 这 是 维 吗 ？ [SEP] [PAD] [PAD] ...
-        label_ids: O O O B-xx O O O O O ...  (使用tf.nn.sparse_softmax_cross_entropy_with_logits，这里[CLS]和[SEP]都记了损失，[PAD]通过input_mask可以区分并不计损失)
-        input_mask: 1 1 1 1 1 1 1 0 0 ...  
-        """
+
         # TODO clean up all this to leverage built-in features of tokenizers
 
         label_map = {label: i for i, label in enumerate(label_list)}
@@ -129,34 +117,11 @@ class TokenClassificationTask:
                 # bert-base-multilingual-cased sometimes output "nothing ([]) when calling tokenize with just a space.
                 if len(word_tokens) > 0:
                     tokens.extend(word_tokens)
-                    if word in term_df and random.random() < term_df.get(word):
-                        label_ids.extend([label_map.get('O')] + [pad_token_label_id] * (len(word_tokens) - 1))
+                    # Use the real label id for the first token of the word, and padding ids for the remaining tokens
+                    if label in label_map:
+                        label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))
                     else:
-                        # Use the real label id for the first token of the word, and padding ids for the remaining tokens
-                        if label in label_map:
-                            label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))
-                        else:
-                            label_ids.extend([label_map.get('O')] + [pad_token_label_id] * (len(word_tokens) - 1))
-
-            # 对single word术语，不计训练损失
-            # example_len = len(example.words)
-            # for idx in range(example_len):
-            #     word = example.words[idx]
-            #     label = example.labels[idx]
-            #     word_tokens = tokenizer.tokenize(word)
-            #     is_single_word_term = False
-            #     if label.startswith("B-"):
-            #         if idx == example_len - 1 or not example.labels[idx+1].startswith("I-"):
-            #             is_single_word_term = True
-            #
-            #     # bert-base-multilingual-cased sometimes output "nothing ([]) when calling tokenize with just a space.
-            #     if len(word_tokens) > 0:
-            #         tokens.extend(word_tokens)
-            #         # Use the real label id for the first token of the word, and padding ids for the remaining tokens
-            #         if is_single_word_term:
-            #             label_ids.extend([pad_token_label_id] * len(word_tokens))
-            #         else:
-            #             label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))
+                        label_ids.extend([label_map.get('O')] + [pad_token_label_id] * (len(word_tokens) - 1))
 
             # Account for [CLS] and [SEP] with "- 2" and with "- 3" for RoBERTa.
             special_tokens_count = tokenizer.num_special_tokens_to_add()
@@ -271,24 +236,12 @@ if is_torch_available():
                 max_seq_length: Optional[int] = None,
                 overwrite_cache=False,
                 mode: Split = Split.train,
-                terms_document_freq: str = None,
         ):
             # Load data features from cache or dataset file
             cached_features_file = os.path.join(
                 data_dir,
                 "cached_{}_{}_{}".format(mode.value, tokenizer.__class__.__name__, str(max_seq_length)),
             )
-
-            term_df = dict()
-            if mode == Split.train and os.path.exists(terms_document_freq):
-                '''
-                基于DF值(Document Frequency)进行标注
-                '''
-                with open(terms_document_freq, 'r') as reader:
-                    for line in reader:
-                        ss = line.split("##")
-                        term_df[ss[0]] = float(ss[1].rstrip())
-                print("load df file done, len: ", len(term_df))
 
             # Make sure only the first process in distributed training processes the dataset,
             # and the others will use the cache.
@@ -303,7 +256,6 @@ if is_torch_available():
                     examples = token_classification_task.read_examples_from_file(data_dir, mode)
                     # TODO clean up all this to leverage built-in features of tokenizers
                     self.features = token_classification_task.convert_examples_to_features(
-                        term_df,
                         examples,
                         labels,
                         max_seq_length,
@@ -321,13 +273,12 @@ if is_torch_available():
                         pad_token_label_id=self.pad_token_label_id,
                     )
 
-                    #if mode != Split.test:
+                    # if mode != Split.test:
                     #    logger.info(f"Saving features into cached file {cached_features_file}")
                     #    torch.save(self.features, cached_features_file)
-                    
+
                     logger.info(f"Saving features into cached file {cached_features_file}")
                     torch.save(self.features, cached_features_file)
-
 
         def __len__(self):
             return len(self.features)

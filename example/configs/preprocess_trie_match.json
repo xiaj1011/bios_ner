@@ -2,8 +2,6 @@
   "cleanterms_path":"/platform_tech/aigraph/cleanterms/c5_4ex/cleanterms5_4ex02.core.txt",
   "terms_pkl_path": "/platform_tech/aigraph/cleanterms/c5_4ex/cleanterms5_4ex02.core.pkl",
   "trie_pkl_path": "/platform_tech/aigraph/cleanterms/c5_4ex/cleanterms5_4ex02_core_trie.pkl",
-  "sty2sgr_path": "/platform_tech/aigraph/cleanterms/c5_4ex/entity_group.json",
-  "terms_df_path": "",
   "dataset": {
     "mode": "trie_match",
     "working_dir": "./",

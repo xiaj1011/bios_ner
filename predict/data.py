@@ -1,9 +1,5 @@
-"""
-NerDataLoader:
-为了解决训练数据读取时导致内存爆炸的问题，
-每次训练时仅读取少量数据，做局部shuffle，然后yield生成。
-省略中间读取所有训练数据的过程，减少内存开销
-"""
+#!/usr/bin/env python
+
 from utils_ner import TokenClassificationTask, Split, InputExample, InputFeatures
 from typing import List, Optional, Union, TextIO
 from transformers import PreTrainedTokenizer
@@ -150,17 +146,10 @@ class NerDataLoader(object):
                 attention_mask_list.append(input_feature.attention_mask)
                 token_type_ids_list.append(input_feature.token_type_ids)
                 label_ids_list.append(input_feature.label_ids)
-            #print(torch.LongTensor(input_ids_list).size())
-            #print(torch.LongTensor(attention_mask_list).size())
-            #print(torch.LongTensor(token_type_ids_list).size())
-            #print(torch.LongTensor(label_ids_list).size())
+
             yield torch.LongTensor(input_ids_list),torch.LongTensor(attention_mask_list),torch.LongTensor(token_type_ids_list),torch.LongTensor(label_ids_list)
 
-"""
-TokenClassificationDatasetGenerator:
-TokenClassificationDataset的生成器版本，在预测时使用
-每次仅读取部分数据并传入CPU内存，防止内存开销过大，每次预测buffer_size个样本
-"""
+
 class TokenClassificationDatasetGenerator(Dataset):
     """
     This will be superseded by a framework-agnostic approach

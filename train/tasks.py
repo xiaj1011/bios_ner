@@ -48,7 +48,7 @@ class NER(TokenClassificationTask):
             mode = mode.value
         guid_index = 1
         examples = []
-        # 将buffer填满,buffer_size的大小取决于CPU内存的容量
+
         words = []
         labels = []
         while len(examples) < buffer_size:
@@ -87,7 +87,6 @@ class NER(TokenClassificationTask):
                 writer.write(output_line)
             else:
                 logger.warning("Maximum sequence length exceeded: No prediction for '%s'.", line.split()[0])
-                # logger.warning("Maximum sequence length exceeded: No prediction for '%d'.", len(line.split()[0]))
 
     def get_labels(self, path: str) -> List[str]:
         if path:

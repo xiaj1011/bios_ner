@@ -91,9 +91,6 @@ class DataTrainingArguments:
     overwrite_cache: bool = field(
         default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
     )
-    terms_document_freq: str = field(
-       default=None, metadata={"help": "document frequency of cleanterms is used to annotate entity by some probability"}
-    )
 
 
 def main():
@@ -161,9 +158,6 @@ def main():
     # Distributed training:
     # The .from_pretrained methods guarantee that only one local process can concurrently
     # download model & vocab.
-    logger.info("【耗时分析】开始载入bert模型")
-    logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-    start_time = datetime.datetime.now()
 
     config = BertConfig.from_pretrained(
         model_args.config_name if model_args.config_name else model_args.model_name_or_path,
@@ -184,13 +178,6 @@ def main():
         cache_dir=model_args.cache_dir,
     )
 
-    end_time = datetime.datetime.now()
-    logger.info("【耗时分析】载入bert模型耗时：%s", str(end_time-start_time))
-    logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-
-    logger.info("【耗时分析】开始载入train/dev数据集")
-    logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-    start_time = datetime.datetime.now()
     # Get datasets
     train_dataset = (
         TokenClassificationDataset(
@@ -202,7 +189,6 @@ def main():
             max_seq_length=data_args.max_seq_length,
             overwrite_cache=data_args.overwrite_cache,
             mode=Split.train,
-            terms_document_freq=data_args.terms_document_freq,
         )
         if training_args.do_train
         else None
@@ -218,16 +204,10 @@ def main():
             max_seq_length=data_args.max_seq_length,
             overwrite_cache=data_args.overwrite_cache,
             mode=Split.dev,
-            terms_document_freq=data_args.terms_document_freq,
         )
         if training_args.do_eval
         else None
     )
-    
-    end_time = datetime.datetime.now()
-    logger.info("【耗时分析】载入train/dev数据集耗时：%s", str(end_time-start_time))
-    logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-
 
     def align_predictions(predictions: np.ndarray, label_ids: np.ndarray) -> Tuple[List[int], List[int]]:
         preds = np.argmax(predictions, axis=2)
@@ -267,17 +247,9 @@ def main():
 
     # Training
     if training_args.do_train:
-        logger.info("【耗时分析】开始训练")
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-        start_time = datetime.datetime.now()
         trainer.train(
             model_path=model_args.model_name_or_path if os.path.isdir(model_args.model_name_or_path) else None
         )
-        end_time = datetime.datetime.now()
-        logger.info("【耗时分析】训练耗时：%s", str(end_time - start_time))
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-
-
 
         trainer.save_model()
         # For convenience, we also re-save the tokenizer to the same directory,
@@ -288,16 +260,9 @@ def main():
     # Evaluation
     results = {}
     if training_args.do_eval:
-        logger.info("【耗时分析】开始eval")
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-        start_time = datetime.datetime.now()
-
         logger.info("*** Evaluate ***")
 
         result = trainer.evaluate()
-        end_time = datetime.datetime.now()
-        logger.info("【耗时分析】eval耗时：%s", str(end_time - start_time))
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
 
         output_eval_file = os.path.join(training_args.output_dir, "eval_results.txt")
         if trainer.is_world_master():
@@ -311,10 +276,6 @@ def main():
 
     # Predict
     if training_args.do_predict:
-        logger.info("【耗时分析】开始载入test数据集")
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-        start_time = datetime.datetime.now()
-
         test_dataset = TokenClassificationDataset(
             token_classification_task=token_classification_task,
             data_dir=data_args.data_dir,
@@ -325,26 +286,9 @@ def main():
             overwrite_cache=data_args.overwrite_cache,
             mode=Split.test,
         )
-        end_time = datetime.datetime.now()
-        logger.info("【耗时分析】载入test数据集耗时：%s", str(end_time-start_time))
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
 
-        logger.info("【耗时分析】开始预测")
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-        start_time = datetime.datetime.now()
         predictions, label_ids, metrics = trainer.predict(test_dataset)
-        end_time = datetime.datetime.now()
-        logger.info("【耗时分析】预测耗时：%s", str(end_time - start_time))
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-
-        logger.info("【耗时分析】开始对齐预测和label")
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-        start_time = datetime.datetime.now()
-        # preds_list, _ = align_predictions(predictions, label_ids)
         preds_list = metrics.get("eval_preds_list")
-        end_time = datetime.datetime.now()
-        logger.info("【耗时分析】对齐预测和label耗时：%s", str(end_time - start_time))
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
 
         output_test_results_file = os.path.join(training_args.output_dir, "test_results.txt")
         if trainer.is_world_master():
@@ -354,19 +298,12 @@ def main():
                     writer.write("%s = %s\n" % (key, metrics.get(key)))
 
         # Save predictions
-        logger.info("【耗时分析】开始保存预测结果到文件")
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
-        start_time = datetime.datetime.now()
- 
         output_test_predictions_file = os.path.join(training_args.output_dir, "test_predictions.txt")
         if trainer.is_world_master():
             with open(output_test_predictions_file, "w") as writer:
                 with open(os.path.join(data_args.data_dir, "test.txt"), "r") as f:
                     print("pred_list len: ", len(preds_list))
                     token_classification_task.write_predictions_to_file(writer, f, preds_list)
-        end_time = datetime.datetime.now()
-        logger.info("【耗时分析】保存预测结果到文件耗时：%s", str(end_time - start_time))
-        logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
 
     return results
 
@@ -378,4 +315,3 @@ def _mp_fn(index):
 
 if __name__ == "__main__":
     main()
-

@@ -199,9 +199,9 @@ def match_and_tagging(mode, terms_pkl_path, trie_pkl_path, raw_text_path, tagged
 
 if __name__ == "__main__":
 
-    terms_path = "/platform_tech/aigraph/cleanterms/c5/cleanterms5.txt"
-    terms_pkl_path = "/platform_tech/aigraph/cleanterms/c5/terms5.pkl"
-    trie_pkl_path = "/platform_tech/aigraph/cleanterms/c5/trie5.pkl"
+    terms_path = "../example/cleanterms/cleanterms.txt.example"
+    terms_pkl_path = "../example/cleanterms/cleanterms.pkl"
+    trie_pkl_path = "../example/cleanterms/cleanterms_trie.pkl"
 
     gen_terms_pkl(terms_pkl_path, terms_path)
 

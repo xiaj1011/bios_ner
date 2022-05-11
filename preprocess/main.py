@@ -32,7 +32,7 @@ def generate(args):
     if mode == 'train':
         log.info("mode: train")
         prepare_data.generate(args.dataset['text_path'],
-                              args.dataset['annotated_path'], args.terms_pkl_path, args.sty2sgr_path,
+                              args.dataset['annotated_path'], 
                               args.dataset['working_dir'])
 
     if mode == 'predict':
@@ -65,6 +65,8 @@ if __name__ == '__main__':
     build_trie(pre_args)
 
     mode = pre_args.dataset['mode']
+    log.info(f"task mode: {mode}")    
+
     t2 = time.time()
     log.info("step 2: entity matching ...")
     if mode in ['train', 'trie_match']:
@@ -74,7 +76,7 @@ if __name__ == '__main__':
 
     t3 = time.time()
     log.info("step 3: generate train/dev/test data ...")
-    if mode in ['train', 'predict']:
+    if mode in ['train', 'predict', 'train_no_trie_match']:
         generate(pre_args)
     else:
         log.info(f"{mode} task, SKIP generate train/dev/test.")
@@ -83,3 +85,4 @@ if __name__ == '__main__':
     log.info("step 1: trie building cost {} second".format(t2 - t1))
     log.info("step 2: entity matching cost {} second" .format(t3 - t2))
     log.info("step 3: generate training data cost {} second".format(t4 - t3))
+

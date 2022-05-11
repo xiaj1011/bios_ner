@@ -1,5 +1,4 @@
-# Predict
-## Quick Start
+### Quick Start
 ```
 sh predict.sh
 ```

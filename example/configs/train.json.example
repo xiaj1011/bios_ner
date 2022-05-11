@@ -6,7 +6,6 @@
   "output_dir": "../example/data/ner_train/output",
   "overwrite_output_dir": true,
   "cache_dir": "../pretrain/pubmedbert_abs/",
-  "terms_document_freq": "../example/cleanterms/terms_document_freq.txt.example",
   "do_train": true,
   "do_eval": true,
   "do_predict": false,
