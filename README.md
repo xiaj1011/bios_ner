@@ -12,8 +12,12 @@ sh env_setup.sh
 
 ## Modules
 The following diagrams help you understand each module in the project, details can be found in each directory.
-
 ![img.png](doc/img.png)
+
+## Models
+fine-tuned medical ner model can be downloaded from:  
+链接: https://pan.baidu.com/s/12m05j0kFXdvutIfIzKMHtw  密码: dgkh
+
 
 ## Citation
 ```bibtex
