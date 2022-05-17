@@ -23,19 +23,12 @@ fine-tuned medical ner model can be downloaded from:
 ```bibtex
 @misc{https://doi.org/10.48550/arxiv.2203.09975,
   doi = {10.48550/ARXIV.2203.09975},
-  
   url = {https://arxiv.org/abs/2203.09975},
-  
   author = {Yu, Sheng and Yuan, Zheng and Xia, Jun and Luo, Shengxuan and Ying, Huaiyuan and Zeng, Sihang and Ren, Jingyi and Yuan, Hongyi and Zhao, Zhengyun and Lin, Yucong and Lu, Keming and Wang, Jing and Xie, Yutao and Shum, Heung-Yeung},
-  
   keywords = {Computation and Language (cs.CL), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
-  
   title = {BIOS: An Algorithmically Generated Biomedical Knowledge Graph},
-  
   publisher = {arXiv},
-  
   year = {2022},
-  
   copyright = {Creative Commons Attribution Non Commercial Share Alike 4.0 International}
 }
 
