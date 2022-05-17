@@ -18,6 +18,9 @@ The following diagrams help you understand each module in the project, details c
 fine-tuned medical ner model can be downloaded from:  
 链接: https://pan.baidu.com/s/12m05j0kFXdvutIfIzKMHtw  密码: dgkh
 
+cleanterms can be downloaded from:  
+链接: https://pan.baidu.com/s/1GXnsSa_39nbX_YdJVnQh2g  密码: 4501
+
 
 ## Citation
 ```bibtex
