@@ -1,6 +1,7 @@
 # BIOS NER
 This project is used for **named entity recognition**(NER) in the **medical** field, and it helps us build a large-scale medical knowledge graph BIOS (https://bios.idea.edu.cn/).
 
+This project refers to Transformer's [NER code](https://github.com/huggingface/transformers/tree/main/examples/legacy/token-classification).
 
 ## Install
 `Python3.6` is recommended! For python3.7, see [issues 14559](https://github.com/huggingface/transformers/issues/14559).  
