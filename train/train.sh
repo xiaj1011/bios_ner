@@ -9,5 +9,5 @@ fi
 ln -s $HOME/models/pubmedbert_abs ../pretrain/pubmedbert_abs
 cp ../example/configs/train.json.example ${output}/hf_argument.json
 
-CUDA_VISIBLE_DEVICES=1,2 python run_ner.py ${output}/hf_argument.json
+CUDA_VISIBLE_DEVICES=1,2 python -u run_ner.py ${output}/hf_argument.json > train.log 2>&1 &
 

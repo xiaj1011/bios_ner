@@ -1,0 +1,123 @@
+B-Acquired Abnormality
+B-Amino Acid, Peptide, or Protein
+B-Anatomical Abnormality
+B-Anatomical Structure
+B-Antibiotic
+B-Bacterium
+B-Biologically Active Substance
+B-Biomedical or Dental Material
+B-Body Location or Region
+B-Body Part, Organ, or Organ Component
+B-Body Space or Junction
+B-Body Substance
+B-Body System
+B-Cell
+B-Cell Component
+B-Cell Function
+B-Cell or Molecular Dysfunction
+B-Chemical
+B-Chemical Viewed Functionally
+B-Chemical Viewed Structurally
+B-Clinical Drug
+B-Congenital Abnormality
+B-Diagnostic Procedure
+B-Disease or Syndrome
+B-Drug Delivery Device
+B-Element, Ion, or Isotope
+B-Embryonic Structure
+B-Enzyme
+B-Eukaryote
+B-Experimental Model of Disease
+B-Finding
+B-Fully Formed Anatomical Structure
+B-Fungus
+B-Genetic Function
+B-Hazardous or Poisonous Substance
+B-Hormone
+B-Immunologic Factor
+B-Indicator, Reagent, or Diagnostic Aid
+B-Injury or Poisoning
+B-Inorganic Chemical
+B-Laboratory Procedure
+B-Medical Device
+B-Mental Process
+B-Mental or Behavioral Dysfunction
+B-Molecular Biology Research Technique
+B-Molecular Function
+B-Neoplastic Process
+B-Nucleic Acid, Nucleoside, or Nucleotide
+B-Organ or Tissue Function
+B-Organic Chemical
+B-Organism Function
+B-Pathologic Function
+B-Pharmacologic Substance
+B-Physiologic Function
+B-Receptor
+B-Research Device
+B-Sign or Symptom
+B-Therapeutic or Preventive Procedure
+B-Tissue
+B-Virus
+B-Vitamin
+I-Acquired Abnormality
+I-Amino Acid, Peptide, or Protein
+I-Anatomical Abnormality
+I-Anatomical Structure
+I-Antibiotic
+I-Bacterium
+I-Biologically Active Substance
+I-Biomedical or Dental Material
+I-Body Location or Region
+I-Body Part, Organ, or Organ Component
+I-Body Space or Junction
+I-Body Substance
+I-Body System
+I-Cell
+I-Cell Component
+I-Cell Function
+I-Cell or Molecular Dysfunction
+I-Chemical
+I-Chemical Viewed Functionally
+I-Chemical Viewed Structurally
+I-Clinical Drug
+I-Congenital Abnormality
+I-Diagnostic Procedure
+I-Disease or Syndrome
+I-Drug Delivery Device
+I-Element, Ion, or Isotope
+I-Embryonic Structure
+I-Enzyme
+I-Eukaryote
+I-Experimental Model of Disease
+I-Finding
+I-Fully Formed Anatomical Structure
+I-Fungus
+I-Genetic Function
+I-Hazardous or Poisonous Substance
+I-Hormone
+I-Immunologic Factor
+I-Indicator, Reagent, or Diagnostic Aid
+I-Injury or Poisoning
+I-Inorganic Chemical
+I-Laboratory Procedure
+I-Medical Device
+I-Mental Process
+I-Mental or Behavioral Dysfunction
+I-Molecular Biology Research Technique
+I-Molecular Function
+I-Neoplastic Process
+I-Nucleic Acid, Nucleoside, or Nucleotide
+I-Organ or Tissue Function
+I-Organic Chemical
+I-Organism Function
+I-Pathologic Function
+I-Pharmacologic Substance
+I-Physiologic Function
+I-Receptor
+I-Research Device
+I-Sign or Symptom
+I-Therapeutic or Preventive Procedure
+I-Tissue
+I-Virus
+I-Vitamin
+O

@@ -1,18 +1,23 @@
 *.log
 *.pkl.example
+*.pkl
 */__pycache__/
 */runs/
-server/tmp_test/
 
 pretrain/*
 !pretrain/download_pubmedbert.sh
+
+example/cleanterms/cleanterms*.txt
+
+example/models/*
+!example/models/labels.txt
 
 example/data/*
 !example/data/corpus*
 !example/data/test/
 
 preprocess/task_*
-preprocess/preprocess.json
+preprocess/preprocess*.json
 preprocess/run_*.sh
 tasks/
 

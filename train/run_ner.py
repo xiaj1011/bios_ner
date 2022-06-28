@@ -91,6 +91,10 @@ class DataTrainingArguments:
     overwrite_cache: bool = field(
         default=False, metadata={"help": "Overwrite the cached training and evaluation sets"}
     )
+    df_path: str = field(
+        default="../example/cleanterms/df.txt",
+        metadata={"help": "term document frequency"}
+    )
 
 
 def main():
@@ -189,6 +193,8 @@ def main():
             max_seq_length=data_args.max_seq_length,
             overwrite_cache=data_args.overwrite_cache,
             mode=Split.train,
+            df_path=data_args.df_path,
+            
         )
         if training_args.do_train
         else None

@@ -1,0 +1,10 @@
+{
+  "cleanterms_path":"../example/cleanterms/cleanterms5.txt",
+  "terms_pkl_path": "../example/cleanterms/terms5.pkl",
+  "trie_pkl_path": "../example/cleanterms/trie5.pkl",
+  "dataset": {
+    "mode": "predict",
+    "working_dir": "../example/data/ner_predict/",
+    "text_path": "../example/data/corpus.txt"
+  }
+}

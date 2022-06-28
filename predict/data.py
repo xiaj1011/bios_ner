@@ -1,5 +1,9 @@
-#!/usr/bin/env python
-
+"""
+NerDataLoader:
+为了解决训练数据读取时导致内存爆炸的问题，
+每次训练时仅读取少量数据，做局部shuffle，然后yield生成。
+省略中间读取所有训练数据的过程，减少内存开销
+"""
 from utils_ner import TokenClassificationTask, Split, InputExample, InputFeatures
 from typing import List, Optional, Union, TextIO
 from transformers import PreTrainedTokenizer
@@ -20,7 +24,6 @@ class NerDataLoader(object):
         labels: List[str],
         model_type: str,
         max_seq_length: int,
-        df_path: str,
         shuffle:bool
     ):
         self.batch_size = batch_size
@@ -35,16 +38,7 @@ class NerDataLoader(object):
         self.labels = labels
         self.model_type = model_type
         self.max_seq_length = max_seq_length
-        '''
-        基于DF值(Document Frequency)进行标注
-        '''
-        term_df = dict()
-        with open(df_path, 'r') as reader:
-            for line in reader:
-                ss = line.split("##")
-                term_df[ss[0]] = float(ss[1].rstrip())
-        self.term_df = term_df
-
+        
     def _fill_buf(self):
         continuous_space_line = 0
         try:
@@ -103,7 +97,6 @@ class NerDataLoader(object):
         #print("example 0 this batch : ")
         #print(examples[0])
         features = self.data_helper.convert_examples_to_features(
-                    self.term_df,
                     examples,
                     self.labels,
                     self.max_seq_length,
@@ -146,10 +139,17 @@ class NerDataLoader(object):
                 attention_mask_list.append(input_feature.attention_mask)
                 token_type_ids_list.append(input_feature.token_type_ids)
                 label_ids_list.append(input_feature.label_ids)
-
+            #print(torch.LongTensor(input_ids_list).size())
+            #print(torch.LongTensor(attention_mask_list).size())
+            #print(torch.LongTensor(token_type_ids_list).size())
+            #print(torch.LongTensor(label_ids_list).size())
             yield torch.LongTensor(input_ids_list),torch.LongTensor(attention_mask_list),torch.LongTensor(token_type_ids_list),torch.LongTensor(label_ids_list)
 
-
+"""
+TokenClassificationDatasetGenerator:
+TokenClassificationDataset的生成器版本，在预测时使用
+每次仅读取部分数据并传入CPU内存，防止内存开销过大，每次预测buffer_size个样本
+"""
 class TokenClassificationDatasetGenerator(Dataset):
     """
     This will be superseded by a framework-agnostic approach
@@ -176,11 +176,9 @@ class TokenClassificationDatasetGenerator(Dataset):
             overwrite_cache=False,
             mode: Split = Split.train,
     ):
-        term_df = {}
         examples = token_classification_task.read_examples_from_reader(data_reader, buffer_size, mode)
         # TODO clean up all this to leverage built-in features of tokenizers
         self.features = token_classification_task.convert_examples_to_features(
-            term_df,
             examples,
             labels,
             max_seq_length,

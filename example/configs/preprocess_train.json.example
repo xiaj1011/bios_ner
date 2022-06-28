@@ -1,0 +1,12 @@
+{
+  "cleanterms_path":"../example/cleanterms/cleanterms5.txt",
+  "terms_pkl_path": "../example/cleanterms/terms5.pkl",
+  "trie_pkl_path": "../example/cleanterms/trie5.pkl",
+  "dataset": {
+    "mode": "train",
+    "working_dir": "../example/data/ner_train/",
+    "text_path": "../example/data/corpus.txt",
+    "tagged_path": "../example/data/corpus_tagged.txt",
+    "annotated_path": "../example/data/corpus_annotated.txt"
+  }
+}

@@ -1,7 +1,10 @@
-conllu~=4.4
-numpy~=1.19.2
-seqeval~=1.2.2
-transformers~=3.4.0
-filelock~=3.0.12
-tqdm~=4.50.2
-psutil~=5.8.0
+conllu==4.4.1
+filelock==3.0.12
+numpy==1.19.5
+psutil==5.8.0
+pynvml==11.0.0
+seqeval==1.2.2
+tensorflow==2.9.1
+torch==1.8.0+cu111
+tqdm==4.50.2
+transformers==3.4.0
