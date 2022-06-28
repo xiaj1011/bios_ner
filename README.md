@@ -11,7 +11,7 @@
 - [Citation](#citation)
 
 ## Overview
-![ner modules](./doc/ner_modules.png)
+![ner modules](./doc/img.png)
 The NER model employed in [BIOS]((https://bios.idea.edu.cn/)) is the standard BERT sequential classifier.
 Our approach of using automated annotation to generate training data belongs to the distant supervision (DS-NER) category.
 
