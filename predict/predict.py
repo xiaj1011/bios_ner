@@ -275,7 +275,6 @@ def main():
     logger.info("开始读取训练数据")
     logger.info("【内存消耗】%.3fG", psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)
     test_file_path = os.path.join(data_args.data_dir,"test.txt")
-    df_path = "/data1/aigraph/hmkg-ner/data/df_sep_by_##_oabulks.txt"
     logger.info("test file path : {}".format(test_file_path))
 
     # predict!
@@ -343,7 +342,7 @@ def main():
 def write_predictions_to_file(writer: TextIO, test_input_reader: TextIO, preds_list: List):
     example_id = 0
     for line in test_input_reader:
-        if line.startswith("==DOCSTART==") or line == "" or line == "\n":
+        if line.startswith("==DOCSTART==") or line == "" or line == "\n" or line == "\t\n":
             writer.write(line)
             if not preds_list[example_id]:
                 example_id += 1
@@ -351,7 +350,8 @@ def write_predictions_to_file(writer: TextIO, test_input_reader: TextIO, preds_l
             output_line = line.split()[0] + "\t" + preds_list[example_id].pop(0) + "\n"
             writer.write(output_line)
         else:
-            logger.warning("Maximum sequence length exceeded: No prediction for %s tokens." % len(line.split()))
+            logger.warning("Maximum sequence length exceeded: No prediction for '%s'.", line.split()[0])
+
 
 if __name__ == "__main__":
     main()
